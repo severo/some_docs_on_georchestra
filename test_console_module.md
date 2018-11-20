@@ -82,7 +82,7 @@ psql.url=jdbc:postgresql://database:5432/georchestra
 There are two options, use the one you prefer:
 
 - modify these two lines, replacing `ldap:389` by `localhost:389` and `database:5432` by `localhost:5432`
-- or, add the following line in `/etc/hosts`, in order to consider `ldap` and `postgresql` as domain names of the localhost host IP `127.0.0.1`:
+- or, add the following line in `/etc/hosts`, in order to consider `ldap` and `postgresql` as domain names of the localhost IP `127.0.0.1`:
 
     ```
     127.0.0.1       ldap postgresql
