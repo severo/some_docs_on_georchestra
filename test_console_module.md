@@ -92,14 +92,14 @@ There are two options, use the one you prefer:
 
 In order to simulate we are logged in, we will set the headers in the [simple-modify-headers](https://github.com/didierfred/SimpleModifyHeaders) browser extension. After installing, enter the configuration:
 
-- Url Patterns* : `http://localhost/console/*` (note taht it does not allow to filter by port)
+- Url Patterns* : `http://localhost/console/*` (note that it does not allow to filter by port)
 
 create two rules:
 
 - Add / `sec-username` / `testadmin` / `Request`
 - Add / `sec-roles` / `ROLE_SUPERUSER` / `Request`
 
-save and start the extension.
+Then save, and start the extension.
 
 ## Launch the console module
 
