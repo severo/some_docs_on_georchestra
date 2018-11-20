@@ -35,27 +35,27 @@ cd ~/dev/docker
 edit docker-compose.yml
 ```
 
-commenting the following lines:
+- commenting the following lines:
 
-```yml
-# mapfishapp:
-#    image: georchestra/mapfishapp:latest
-[... until this end of the file]
-```
+    ```yml
+    # mapfishapp:
+    #    image: georchestra/mapfishapp:latest
+    [... until this end of the file]
+    ```
 
-and adding the following ones, to expose the postgresql database and the LDAP directory ports:
+- and adding the following ones, to expose the postgresql database and the LDAP directory ports:
 
-```yml
-  database:
+    ```yml
+      database:
+        (...)
+        ports:
+          - "5432:5432"
     (...)
-    ports:
-      - "5432:5432"
-(...)
-  ldap:
-    (...)
-    ports:
-      - "389:389"
-```
+      ldap:
+        (...)
+        ports:
+          - "389:389"
+    ```
 
 Then deploy the docker images:
 
