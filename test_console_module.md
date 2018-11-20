@@ -23,6 +23,7 @@ Download the codebase of the docker composition:
 cd ~/dev
 git clone git@github.com:georchestra/docker.git
 cd docker
+git checkout master
 git submodule update --init --remote
 docker-compose pull
 ```
