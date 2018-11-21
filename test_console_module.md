@@ -1,10 +1,10 @@
 # Test the console module
 
-To develop and test the [geOrchestra console module](https://github.com/georchestra/georchestra/tree/master/console), we can use the following configuration, that does not use the security proxy, but the [simple-modify-headers](https://github.com/didierfred/SimpleModifyHeaders) browser extension.
+To develop and test the [geOrchestra console module](https://github.com/georchestra/georchestra/tree/master/console), we can use the following configuration.
 
-## Codebase
+## Code base
 
-Download the codebase of geOrchestra:
+Download the code base of geOrchestra:
 
 
 ```bash
@@ -17,7 +17,7 @@ git checkout master
 
 ## Docker
 
-Download the codebase of the docker composition:
+Download the code base of the docker composition:
 
 ```bash
 cd ~/dev
@@ -43,7 +43,7 @@ edit docker-compose.yml
     [... until this end of the file]
     ```
 
-- and adding the following ones, to expose the postgresql database and the LDAP directory ports:
+- and adding the following ones, to expose the PostgreSQL database and the LDAP directory ports:
 
     ```yml
       database:
@@ -87,10 +87,26 @@ There are two options, use the one you prefer:
     ```
     127.0.0.1       ldap postgresql
     ```
+## Launch the console module
 
-## Prepare the headers
+On this basis, we enter the console directory and launch jetty:
 
-In order to simulate we are logged in, we will set the headers in the [simple-modify-headers](https://github.com/didierfred/SimpleModifyHeaders) browser extension. After installing, enter the configuration:
+```bash
+cd ~/dev/georchestra/console
+mvn -Dgeorchestra.datadir=../../docker/config/ jetty:run
+```
+
+The console module will be available at [http://localhost:8286/console/](http://localhost:8286/console).
+
+## Authenticate to the console
+
+There are two alternate ways to get authenticated into the console module.
+
+### Way 1 - add headers and access directly to jetty
+
+The easiest way is to simulate we are logged in, setting headers using the [simple-modify-headers](https://github.com/didierfred/SimpleModifyHeaders) browser extension, and accessing directly to the port exposed by jetty [http://localhost:8286/console/](http://localhost:8286/console).
+
+After installing the browser extension, enter its configuration:
 
 - Url Patterns* : `http://localhost/console/*` (note that it does not allow to filter by port)
 
@@ -101,15 +117,47 @@ create two rules:
 
 Then save, and start the extension.
 
-## Launch the console module
+Finally test the console entering http://localhost:8286/console/.
 
-On this basis, we enter the console directory and lanch jetty:
+Note: this way does not allow to see the header or the analytics data from the console module.
+
+### Way 2 - go through the security-proxy
+
+The second way, that integrates better the console module inside the geOrchestra dockerized modules, implies going through the security proxy. To do so, first we need to find how to access the host network from the docker network. To do so, enter a docker machine via ssh:
 
 ```bash
-cd ~/dev/georchestra/console
-mvn -Dgeorchestra.datadir=../../docker/config/ jetty:run
+$ ssh -p 2222 geoserver@localhost
+Password: [geoserver]
 ```
 
-## Test in the browser
+- and find the gateway (here `172.18.0.1`):
 
-In the browser, enter http://localhost:8286/console/.
+    ```bash
+    $ ip r | grep default
+    default via 172.18.0.1 dev eth0
+    ```
+
+Then, we need to tell the security-proxy where to route the requests coming on `https://georchestra.mydomain.org/console/*`.
+
+- To do so, we modify the following file:
+
+    ```bash
+    cd ~/dev/docker/config/security-proxy
+    edit targets-mapping.properties
+    ```
+
+    to get the line:
+
+    ```bash
+    console=http://172.18.0.1:8286/console/
+    ```
+
+- and then restart the security-proxy docker image:
+
+    ```bash
+    docker-compose restart proxy
+    ```
+
+This way, you should be able to enter [https://georchestra.mydomain.org ](https://georchestra.mydomain.org/), log in, and enter the different views of the console (user details, change password, manage users and groups, etc.)
+
+Note: this way allows to access analytics module data, and to see the header.
