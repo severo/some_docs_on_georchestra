@@ -158,6 +158,8 @@ Then, we need to tell the security-proxy where to route the requests coming on `
     docker-compose restart proxy
     ```
 
+**Be careful: this IP may change when you restart the docker images.**
+
 This way, you should be able to enter [https://georchestra.mydomain.org ](https://georchestra.mydomain.org/), log in, and enter the different views of the console (user details, change password, manage users and groups, etc.)
 
 Note: this way allows to access analytics module data, and to see the header.
