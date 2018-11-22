@@ -35,14 +35,14 @@ georchestra/geonetwork       3-latest            f0c4815b5c15        21 minutes 
 Note that they all get the tag `latest` by default. But maybe you want to manage docker images for various branches at the same time. To do so, we will set a tag to the docker images in order to record when we created it (`20181122`), and from which git branch (in this case `18.06`). Note that there is autocomplete on the docker image hash, so use `<TAB>` key:
 
 ```
-docker tag 4b243148cca0 georchestra/header:18.06_20181122
+docker tag 4b243148cca0 georchestra/header:18.06_20181122_v1
 ```
 
 If we check the images again, we get:
 
 ```
 REPOSITORY                   TAG                 IMAGE ID            CREATED             SIZE
-georchestra/header           18.06_20181122      4b243148cca0        20 minutes ago      459MB
+georchestra/header           18.06_20181122_v1   4b243148cca0        20 minutes ago      459MB
 ```
 
 We repeat the pattern to all the images we created (tag `18.06_20181122`). Note: this process is awfully manual, there is space for improvements (please propose PR).
@@ -60,10 +60,10 @@ In order to use these docker images, we modify the docker composition provided b
 - modify the tags:
 
     ```bash
-    sed -i 's/latest/18.06_20181122/' docker-compose.18.06.yml
+    sed -i 's/latest/18.06_20181122_v1/' docker-compose.18.06.yml
     ```
 
-    it's a good idea to open `docker-compose.18.06.yml` to check if the tags replacement has been done correctly and fix possible errors (typically: `geonetwork`, `database`, `ldap`).
+    it's a good idea to open `docker-compose.18.06.yml` to check if the tags replacement has been done correctly and fix possible errors (typically: `geonetwork`).
 
 - in `docker-compose.18.06.yml`, `docker-compose.override.yml`, and `docker-compose.other-apps.yml`, replace the volumes by new ones (`ldap_data` -> `ldap_data_18.06`). Possibly you could have conflicts with previously existing volumes, so maybe the best solution (I'm too recently working with docker to be subtile) is `docker system prune`.
 
@@ -83,6 +83,35 @@ In order to use these docker images, we modify the docker composition provided b
 
 ## Update docker images
  
-When the code of a module gets an important modification, and we need to update the corresponding docker image:
+When the code of a module gets an important modification, and we want to update the corresponding docker image:
 
-- [to be done]
+- compile the module and generate the docker image (for example, for the extractorapp module):
+
+    ```bash
+    mvn clean package docker:build -Pdocker -DskipTests --pl extractorapp
+    ```
+
+- add the tag to the new docker image:
+
+    ```bash
+    docker tag d3fde13839ac georchestra/header:18.06_20181122_v2
+    ```
+
+- stop the old docker image service (if running):
+
+    ```bash
+    docker-compose stop extractorapp
+    ```
+
+- modify the `docker-compose.18.06.yml` file:
+
+    ```yml
+     extractorapp:
+         image: georchestra/extractorapp:18.06_20181122_v2
+    ```
+
+- start the new docker image service:
+
+    ```bash
+    docker-compose start extractorapp
+    ```
