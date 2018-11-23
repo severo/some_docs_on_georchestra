@@ -106,8 +106,8 @@ When the code of a module gets an important modification, and we want to update 
 - modify the `docker-compose.18.06.yml` file:
 
     ```yml
-     extractorapp:
-         image: georchestra/extractorapp:18.06_20181122_v2
+      extractorapp:
+        image: georchestra/extractorapp:18.06_20181122_v2
     ```
 
 - start the new docker image service:
