@@ -97,3 +97,5 @@ Various modules use the properties files inside the XML Spring files (web.xml, w
       <constructor-arg name="localTimezone" value="${localTimezone}"/>
     </bean>
     ```
+
+Note that there could be other uses, managing the Spring Java classes PropertyPlaceholderConfigurer, PropertySourcesPlaceholderConfigurer and PropertyOverrideConfigurer, but they are used only in upstream GeoServer and GeoNetwork, not in the other geOrchestra modules.
