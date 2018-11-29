@@ -1,8 +1,8 @@
 # How is the configuration managed in geOrchestra?
 
-## Commons
+## Using properties files inside Java and JSP files
 
-Various modules, like header, extractorapp, mapfishapp, ... use the commons module to manage the properties files.
+Various modules, like header, extractorapp, mapfishapp, ... use the commons module to use the properties, from the properties files, inside Java and JSP code.
 
 As seen from maven (`pom.xml` file), they depend on the `georchestra-commons` artifact of the `org.georchestra` project:
 
@@ -60,3 +60,40 @@ and use it inside the code:
   ```java
   georLdapadminPublicContextPath = georchestraConfiguration.getProperty("consolePublicContextPath");
   ```
+
+## Using properties files as placeholders inside Spring
+
+Various modules use the properties files inside the XML Spring files (web.xml, ws-servlet.xml, ...):
+
+- they use the `context:property-placeholder` tag to define where to load the properties from (see [#2123](https://github.com/georchestra/georchestra/issues/2123) for a discussion about the priority order between the files):
+
+  ```xml
+  <context:property-placeholder
+    location="file:${georchestra.datadir}/analytics/analytics.properties"
+    ignore-resource-not-found="true" ignore-unresolvable="true" order="1" />
+  ```
+
+- they use the `${...}` placeholders to pass properties or constructor arguments to the beans:
+
+  - properties:
+
+    ```xml
+    <bean id="jpaDataSource" class="org.apache.commons.dbcp.BasicDataSource" depends-on="waitForDb">
+        <property name="url" value="${dlJdbcUrlOGC}"/>
+        <property name="driverClassName" value="org.postgresql.Driver"/>
+        <property name="testOnBorrow" value="true"/>
+        <property name="validationQuery" value="select 1 as dbcp_connection_test"/>
+        <property name="poolPreparedStatements" value="true"/>
+        <property name="maxOpenPreparedStatements" value="-1"/>
+        <property name="defaultReadOnly" value="false"/>
+        <property name="defaultAutoCommit" value="true"/>
+    </bean>
+    ```
+
+  - constructor arguments:
+
+    ```xml
+      <bean id="statisticsController" class="org.georchestra.analytics.StatisticsController">
+      <constructor-arg name="localTimezone" value="${localTimezone}"/>
+    </bean>
+    ```
