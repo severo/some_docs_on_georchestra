@@ -99,7 +99,8 @@ There are two options, use the one you prefer:
 
 ## Prepare the minimal geonetwork datadir
 
-Install the minimal geonetwork datadir into `/mnt/geonetwork_datadir`.
+Install the minimal geonetwork datadir into `/mnt/geonetwork_datadir`. Be careful with the branch when cloning.  By default, it clones the default branch which is the good one for 18.06 and master.
+
 
 ```bash
 sudo mkdir /mnt/geonetwork_datadir
