@@ -143,6 +143,12 @@ Password: [geoserver]
     default via 172.18.0.1 dev eth0
     ```
 
+- and exit
+
+    ```bash
+    $ exit
+    ```
+
 Then, we need to tell the security-proxy where to route the requests coming on `https://georchestra.mydomain.org/console/*`.
 
 - To do so, we modify the following file:
