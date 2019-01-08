@@ -4,6 +4,7 @@ Here are some notes to help geOrchestra developers.
 
 ## Jetty
 
+* [Launch the cas module with Jetty](./test_cas_module.md)
 * [Launch the console module with Jetty](./test_console_module.md)
 * [Launch the geonetwork module with Jetty](./test_geonetwork_module.md)
 
