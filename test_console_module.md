@@ -93,6 +93,12 @@ On this basis, we enter the console directory and launch jetty:
 
 ```bash
 cd ~/dev/georchestra/console
+mvn jetty:run
+```
+
+Note: if your datadir is not linked to `/etc/georchestra/`, you should add the Java Server variable (and maybe other ones, see the module README.md):
+
+```bash
 mvn -Dgeorchestra.datadir=../../docker/config/ jetty:run
 ```
 
