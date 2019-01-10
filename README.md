@@ -14,7 +14,11 @@ Here are some notes to help geOrchestra developers.
 * [How to see the mails sent by geOrchestra](./test_mails.md)
 * [Use docker images for a given branch](./use_docker_images_for_a_branch.md)
 
-## On geOrchestra
+## Debugging
+
+* [How to debug POST request coming to mapfishapp](./debug_post_requests_in_mapfishapp.md)
+
+## Posts on geOrchestra
 
 * [How do the configuration files work (including overriding)](./how_is_the_configuration_managed.md)
 * [The technologies used in geOrchestra](./technologies_used.md)
