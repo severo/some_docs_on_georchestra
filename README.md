@@ -18,6 +18,10 @@ Here are some notes to help geOrchestra developers.
 
 * [How to debug POST request coming to mapfishapp](./debug_post_requests_in_mapfishapp.md)
 
+## Branches
+
+* [How to report a commit between branches](./report_commit_between_branches.md)
+
 ## Posts on geOrchestra
 
 * [How do the configuration files work (including overriding)](./how_is_the_configuration_managed.md)
