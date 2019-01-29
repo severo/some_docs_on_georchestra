@@ -110,7 +110,7 @@ git clone git@github.com:georchestra/geonetwork_minimal_datadir.git /mnt/geonetw
 
 ## Launch the geonetwork module
 
-On this basis, we enter the console directory and launch jetty:
+On this basis, we enter the geonetwork directory and launch jetty:
 
 ```bash
 cd ~/dev/georchestra/geonetwork/web/
@@ -120,9 +120,9 @@ mvn -Dgeorchestra.datadir=/etc/georchestra -Dgeonetwork.dir=/mnt/geonetwork_data
 The geonetwork module will be available at [http://localhost:8080/geonetwork/](http://localhost:8080/geonetwork).
 
 
-## Authenticate to the console
+## Authenticate into GeoNetwork
 
-There are two alternate ways to get authenticated into the console module.
+There are two alternate ways to get authenticated into the GeoNetwork module.
 
 ### Way 1 - add headers and access directly to jetty
 
@@ -139,13 +139,13 @@ create two rules:
 
 Then save, and start the extension.
 
-Finally test the console entering http://localhost:8080/geonetwork/.
+Finally test the GeoNetwork entering http://localhost:8080/geonetwork/.
 
-Note: this way does not allow to see the header or the analytics data from the console module.
+Note: this way does not allow to see the header or the analytics data from the GeoNetwork module.
 
 ### Way 2 - go through the security-proxy
 
-The second way, that integrates better the console module inside the geOrchestra dockerized modules, implies going through the security proxy. To do so, first we need to find how to access the host network from the docker network. To do so, enter a docker machine via ssh:
+The second way, that integrates better the GeoNetwork module inside the geOrchestra dockerized modules, implies going through the security proxy. To do so, first we need to find how to access the host network from the docker network. To do so, enter a docker machine via ssh:
 
 ```bash
 $ ssh -p 2222 geoserver@localhost
@@ -177,7 +177,7 @@ Then, we need to tell the security-proxy where to route the requests coming on `
     to get the line:
 
     ```bash
-    console=http://172.18.0.1:8080/geonetwork/
+    geonetwork=http://172.18.0.1:8080/geonetwork/
     ```
 
 - and then restart the security-proxy docker image:
