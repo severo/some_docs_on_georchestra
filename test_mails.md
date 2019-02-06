@@ -13,7 +13,7 @@ Another way to see the mails sent by the local geOrchestra instance is to config
 - edit the `docker-compose.override.yml` file:
 
     ```yml
-      ldap:
+      courier-imap:
         (...)
         ports:
           - "143:143"
