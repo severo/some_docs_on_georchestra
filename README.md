@@ -17,6 +17,7 @@ Here are some notes to help geOrchestra developers.
 ## Debugging
 
 * [How to debug POST request coming to mapfishapp](./debug_post_requests_in_mapfishapp.md)
+* [How to debug java code from IntelliJ IDEA](./debug_java_in_intellij_idea.md)
 
 ## Branches
 
